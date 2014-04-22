@@ -1,3 +1,0 @@
-Warning, new version of rvm available '1.25.23', you are using older version '1.25.19'.
-You can disable this warning with:    echo rvm_autoupdate_flag=0 >> ~/.rvmrc
-You can enable  auto-update  with:    echo rvm_autoupdate_flag=2 >> ~/.rvmrc
