@@ -32,7 +32,8 @@ class Engine
     end
     sleep 2
     @workers.each { |worker| worker.terminate }
-    puts 'Done'
+    @log_file.close
+    puts "\r\nDone"
   end
 
   def fetcher_callback(data)
