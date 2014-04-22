@@ -63,7 +63,7 @@ class Engine
 
   def log_data_point(data)
     unless @log_file.nil?
-      @log_file.write("[#{Time.now.strftime('%Y%m%d%H%M%S%L')}] Request #{@data_points.length} performed by Thread #{data[:serial_number]} - Returned '#{data[:result]}' in #{data[:runtime]}s")
+      @log_file.write("[#{Time.now.strftime('%Y%m%d%H%M%S%L')}] Request #{@data_points.length} performed by Thread #{data[:serial_number]} - Returned '#{data[:result]}' in #{data[:run_time]}s\r\n")
     end
   end
 end
