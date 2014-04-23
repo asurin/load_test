@@ -1,4 +1,4 @@
-host:     http://10.38.2.241
+host:     http://localhost
 threads:  24
 duration: 1 minute
 separator: "\t\t\t\t"
