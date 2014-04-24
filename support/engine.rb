@@ -45,7 +45,7 @@ class Engine
   def fetcher_callback(data)
     @semaphore.synchronize do
       @data_points << data
-      #log_data_point(data)
+      log_data_point(data)
     end
   end
 

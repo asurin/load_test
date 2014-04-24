@@ -1,5 +1,5 @@
-host:     http://localhost
+host:     http://10.38.2.241
 threads:  16
-duration: 1 minute
+duration: 1 hour
 separator: "\t\t\t\t"
 log_path: /tmp/f5_load_test.log
