@@ -7,6 +7,13 @@ GEM
       numerizer (~> 0.1.1)
     domain_name (0.5.18)
       unf (>= 0.0.5, < 1.0.0)
+    ffi (1.9.3)
+    ffi (1.9.3-java)
+    ffi-locale (1.0.1)
+      ffi (>= 1.0.9)
+    ffi-ncurses (0.4.0)
+      ffi (>= 1.0.9)
+      ffi-locale (>= 1.0.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     mechanize (2.7.3)
@@ -43,4 +50,5 @@ DEPENDENCIES
   bundler
   celluloid
   chronic_duration
+  ffi-ncurses
   mechanize

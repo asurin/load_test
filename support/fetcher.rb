@@ -1,3 +1,5 @@
+require 'celluloid'
+
 class Fetcher
   include Celluloid
 
@@ -5,17 +7,18 @@ class Fetcher
     @sync_method = sync_method
     @serial_number = serial_number
     @target = target
+    @agent = Mechanize.new
     @run = true
   end
 
   def perform_fetches
     data = { serial_number: @serial_number }
     while @run do
-      sleep 0.1 # Allow interrupts
+      sleep 0.0001
       start_time = Time.now
       begin
-        Mechanize.new.get(@target)
-        data[:result] = 'Success'
+        page = @agent.get(@target)
+        data[:result] = "Success (#{page.code})"
       rescue Mechanize::ResponseCodeError => e
         data[:result] = "HTTP #{e.response_code.to_i}"
       rescue SocketError
