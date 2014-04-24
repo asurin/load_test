@@ -1,5 +1,6 @@
-host:     http://10.38.2.241
+host:     http://localhost
 threads:  16
 duration: 1 hour
 separator: "\t\t\t\t"
 log_path: /tmp/f5_load_test.log
+verification_phrase: "WeddingWire"

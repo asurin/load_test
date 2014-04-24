@@ -14,7 +14,7 @@ class Engine
     @workers = Array.new
     @running = true
     @log_file = File.open(@config['log_path'], 'w') rescue nil
-    (1..@config['threads']).each { |thread| @workers << Fetcher.new(self.method(:fetcher_callback), thread, @config['host']) }
+    (1..@config['threads']).each { |thread| @workers << Fetcher.new(self.method(:fetcher_callback), thread, @config['host'], @config['verification_phrase']) }
     puts "Load Test Engine Initialized - Targeting '#{@config['host']}' @ #{@config['threads']} threads for #{@config['duration']} (#{@run_time}s)"
   end
 
