@@ -13,9 +13,11 @@ class Engine
     @start_time = Time.now
     @workers = Array.new
     @running = true
+    @crawl = @config.key?('crawl') ? @config['crawl'] : false
     @log_file = File.open(@config['log_path'], 'w') rescue nil
-    (1..@config['threads']).each { |thread| @workers << Fetcher.new(self.method(:fetcher_callback), thread, @config['host'], @config['verification_phrase']) }
-    puts "Load Test Engine Initialized - Targeting '#{@config['host']}' @ #{@config['threads']} threads for #{@config['duration']} (#{@run_time}s)"
+    print 'Booting...'
+    (1..@config['threads']).each { |thread| @workers << Fetcher.new(self.method(:fetcher_callback), thread, @config['host'], @crawl, @config['verification_phrase']) }
+    puts "\rLoad Test Engine Initialized - Targeting '#{@config['host']}' @ #{@config['threads']} threads for #{@config['duration']} (#{@run_time}s)"
   end
 
   def run
@@ -44,7 +46,7 @@ class Engine
 
   def fetcher_callback(data)
     @semaphore.synchronize do
-      @data_points << data
+      @data_points.push(data)
       log_data_point(data)
     end
   end
@@ -52,16 +54,16 @@ class Engine
   def formatted_output
     output_items = Array.new
     response_values = Hash.new
-    average_time = 0
+    average_time = 0.0
     @data_points.each do |data|
       if response_values.has_key? data[:result]
         response_values[data[:result]] += 1
       else
         response_values[data[:result]] = 1
       end
-      average_time += data[:run_time]
+      average_time += data[:run_time].to_f
     end
-    average_time = @data_points.length.zero? ? 0 : (average_time.to_f / @data_points.size)
+    average_time = @data_points.length.zero? ? 0 : (average_time.to_f / @data_points.size.to_f)
     responses = response_values.map{|code, count| "#{code}: #{count}"}.join(@config['separator'])
     output_items << "Fetches: #{@data_points.length}"
     output_items << "Average Time: #{average_time.round(4)}s"
@@ -72,7 +74,7 @@ class Engine
 
   def log_data_point(data)
     unless @log_file.nil?
-      @log_file.write("[#{Time.now.strftime('%Y%m%d%H%M%S%L')}] Request #{@data_points.length} performed by Thread #{data[:serial_number]} - Returned '#{data[:result]}' in #{data[:run_time]}s\r\n")
+      @log_file.write("[#{Time.now.strftime('%Y%m%d%H%M%S%L')}] Request #{@data_points.length} performed by Thread #{data[:serial_number]} targeting #{data[:page_url]} - Returned '#{data[:result]}' in #{data[:run_time]}s\r\n")
     end
   end
 end

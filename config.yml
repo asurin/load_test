@@ -1,6 +1,7 @@
-host:     http://localhost
-threads:  16
+host:     http://mantisshrimp.weddingwire.com
+threads:  36
 duration: 1 hour
 separator: "\t\t\t\t"
 log_path: /tmp/f5_load_test.log
 verification_phrase: "WeddingWire"
+crawl: true
