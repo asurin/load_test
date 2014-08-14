@@ -75,6 +75,10 @@ class Engine
   def log_data_point(data)
     unless @log_file.nil?
       @log_file.write("[#{Time.now.strftime('%Y%m%d%H%M%S%L')}] Request #{@data_points.length} performed by Thread #{data[:serial_number]} targeting #{data[:page_url]} - Returned '#{data[:result]}' in #{data[:run_time]}s\r\n")
+      if data.key?(:exception)
+        @log_file.write data[:exception].message
+        @log_file.write data[:exception].backtrace
+      end
     end
   end
 end

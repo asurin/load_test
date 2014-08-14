@@ -1,4 +1,4 @@
-host:     http://mantisshrimp.weddingwire.com
+host:     http://10.38.52.208
 threads:  36
 duration: 1 hour
 separator: "\t\t\t\t"

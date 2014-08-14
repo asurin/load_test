@@ -14,6 +14,7 @@ class Fetcher
     @agent = Mechanize.new
     @agent.user_agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     @agent.read_timeout = 5
+    @agent.keep_alive = false
     @verification_phrase = verification_phrase
     @run = true
   end
@@ -37,16 +38,22 @@ class Fetcher
         end
       rescue Timeout::Error => e
         data[:result] = 'Timeout Error'
+        data[:exception] = e
       rescue Mechanize::ChunkedTerminationError => e
-        data[:result] = "Chunk Error #{e.response_code.to_i}"
+        data[:result] = 'Chunk Error'
+        data[:exception] = e
       rescue Mechanize::ResponseCodeError => e
         data[:result] = "HTTP #{e.response_code.to_i}"
-      rescue SocketError
+        data[:exception] = e
+      rescue SocketError => e
         data[:result] = 'Link Error'
+        data[:exception] = e
       rescue NoMethodError => e
         data[:result] = 'Script Error'
-      rescue Net::HTTP::Persistent::Error
+        data[:exception] = e
+      rescue Net::HTTP::Persistent::Error => e
         data[:result] = 'Connection Reset'
+        data[:exception] = e
       end
       data[:run_time] = Time.now - start_time
       @sync_method.call(data)
