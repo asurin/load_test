@@ -8,7 +8,7 @@ class Fetcher
     @sync_method = sync_method
     @serial_number = serial_number
     @target = host
-    @pages_to_crawl = [ '/' ]
+    @pages_to_crawl = [ '/wedding-vendors' ]
     @crawl = crawl
     @datapoint_queue = Array.new
     @agent = Mechanize.new
@@ -21,7 +21,7 @@ class Fetcher
 
   def perform_fetches
     while @run do
-      #sleep 0.00001
+      sleep 0.1
       begin
         data = { serial_number: @serial_number }
         start_time = Time.now

@@ -1,6 +1,6 @@
 host:     http://10.38.52.208
 threads:  36
-duration: 1 hour
+duration: 72 hour
 separator: "\t\t\t\t"
 log_path: /tmp/f5_load_test.log
 verification_phrase: "WeddingWire"
